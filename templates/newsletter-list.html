@@ -167,10 +167,16 @@
                     icon: 3,
                     title: '发送Newsletter'
                 }, function(index) {
+                    layer.msg('请稍等，正在发送，如果群发人数较多，可能时间会比较长...', {
+                      time: 0
+                      ,icon: 16
+                      ,shade: 0.01
+                    });
                     $.ajax({
                         type: "GET",
                         url: "admin/newsletter/send/" + nid,
                         success: function(res) {
+                            layer.closeAll();
                             if (res.code == 0) { //如果成功了
                                 layer.msg(res.msg, {
                                     icon: 1,
