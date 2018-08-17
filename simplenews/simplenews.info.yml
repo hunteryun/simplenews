@@ -1,0 +1,5 @@
+name: Simplenews
+type: module
+description: Send newsletters to subscribed email addresses.
+core: 1.x
+package: Hunter

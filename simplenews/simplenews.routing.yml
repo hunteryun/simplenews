@@ -1,0 +1,73 @@
+simplenews.newsletter_list:
+  path: '/admin/newsletter/list'
+  defaults:
+    _controller: '\Hunter\simplenews\Controller\SimplenewsController::newsletter_list'
+    _title: 'newsletter list'
+  requirements:
+    _permission: 'access admin page'
+
+simplenews.newsletter_add:
+  path: '/admin/newsletter/add'
+  defaults:
+    _controller: '\Hunter\simplenews\Controller\SimplenewsController::newsletter_add'
+    _title: 'newsletter add'
+  requirements:
+    _permission: 'access admin page'
+
+simplenews.newsletter_edit:
+  path: '/admin/newsletter/edit/{nid}'
+  defaults:
+    _controller: '\Hunter\simplenews\Controller\SimplenewsController::newsletter_edit'
+    _title: 'newsletter edit'
+  requirements:
+    _permission: 'access admin page'
+
+simplenews.simplenews_update:
+  path: '/admin/newsletter/update'
+  defaults:
+    _controller: '\Hunter\simplenews\Controller\SimplenewsController::newsletter_update'
+    _title: 'newsletter update'
+  requirements:
+    _permission: 'access admin page'
+
+simplenews.newsletter_del:
+  path: '/admin/newsletter/del/{nid}'
+  defaults:
+    _controller: '\Hunter\simplenews\Controller\SimplenewsController::newsletter_del'
+    _title: 'newsletter del'
+  requirements:
+    _permission: 'access admin page'
+
+simplenews.subscription_list:
+  path: '/admin/subscription/list'
+  defaults:
+    _controller: '\Hunter\simplenews\Controller\SimplenewsController::subscription_list'
+    _title: 'subscription list'
+  requirements:
+    _permission: 'access admin page'
+
+simplenews.newsletter_subscribe:
+  path: '/newsletter/subscribe'
+  defaults:
+    _controller: '\Hunter\simplenews\Controller\SimplenewsController::newsletter_subscribe'
+    _title: 'newsletter subscribe'
+
+simplenews.newsletter_unsubscribe:
+  path: '/newsletter/unsubscribe'
+  defaults:
+    _controller: '\Hunter\simplenews\Controller\SimplenewsController::newsletter_unsubscribe'
+    _title: 'newsletter unsubscribe'
+
+simplenews.newsletter_subscribe_email_check:
+  path: '/subscribe/email/check'
+  defaults:
+    _controller: '\Hunter\simplenews\Controller\SimplenewsController::subscribe_email_check'
+    _title: 'newsletter subscribe email check'
+
+simplenews.newsletter_send:
+  path: '/admin/newsletter/send/{nid}'
+  defaults:
+    _controller: '\Hunter\simplenews\Controller\SimplenewsController::newsletter_send'
+    _title: 'newsletter send'
+  requirements:
+    _permission: 'access admin page'

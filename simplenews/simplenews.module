@@ -1,0 +1,143 @@
+<?php
+
+/**
+ * Implements hook_entity_info().
+ */
+function simplenews_entity_info() {
+  return array(
+    'name' => 'newsletter',
+    'primaryKey' => 'nid',
+    'baseTable'  => 'newsletter',
+  );
+}
+
+
+/**
+ * get Simple Subscription by id
+ */
+function get_newsletter_byid($nid) {
+    $newsletter = db_select('newsletter', 'n')
+      ->fields('n')
+      ->condition('n.nid', $nid)
+      ->execute()
+      ->fetchObject();
+
+    return $newsletter;
+}
+
+/**
+ * get newsletter by id
+ */
+function subscription_load_by_mail($email) {
+    $subscription = db_select('subscription', 's')
+      ->fields('s')
+      ->condition('s.mail', $email)
+      ->execute()
+      ->fetchObject();
+
+    return $subscription;
+}
+
+/**
+ * get all newsletter.
+ */
+function get_all_newsletter($parms) {
+    $data = array();
+    $query = db_select('newsletter', 'n')
+      ->fields('n')
+      ->extend('Pager')->size(20)->page($parms['page'])
+      ->orderBy('n.created', 'DESC');
+
+    $data['pager'] = $query->fetchPager();
+    $data['list'] = $query->execute()->fetchAll();
+
+    return $data;
+}
+
+/**
+ * get all subscription.
+ */
+function get_all_subscription($parms) {
+    $data = array();
+    $query = db_select('subscription', 's')
+      ->fields('s')
+      ->extend('Pager')->size(20)->page($parms['page'])
+      ->orderBy('s.created', 'DESC');
+
+    $data['pager'] = $query->fetchPager();
+    $data['list'] = $query->execute()->fetchAll();
+
+    return $data;
+}
+
+/**
+ * get subscription lsit.
+ */
+function get_subscription_list() {
+    $subscription = db_select('subscription', 's')
+      ->fields('s')
+      ->orderBy('s.created', 'DESC')
+      ->execute()
+      ->fetchAll();
+
+    return $subscription;
+}
+
+/**
+ * The simplenews form.
+ *
+ * @return array The form array.
+ */
+function simplenews_subscription_form() {
+  $form['mail'] = array(
+    '#type' => 'textfield',
+    '#title' => 'E-mail address ',
+    '#attributes' => array('lay-verify' => 'required|email|emailaddress'),
+  );
+  $form['save'] = array(
+   '#type' => 'submit',
+   '#value' => t('Subscribe'),
+   '#attributes' => array('lay-submit' => '', 'lay-filter' => 'subscribeAdd'),
+  );
+  $form['redirect'] = '/newsletter/subscribe?redirect='.request_uri();
+
+  return $form;
+}
+
+/**
+ * Implements hook_config_form().
+ */
+function simplenews_config_form() {
+  $smtp_form['smtp_host'] = array(
+    '#type' => 'textfield',
+    '#title' => '主机',
+    '#required' => TRUE,
+    '#default_value' => variable_get('smtp_host'),
+    '#attributes' => array('id' => 'smtp_host'),
+  );
+  $smtp_form['smtp_port'] = array(
+    '#type' => 'textfield',
+    '#title' => '端口',
+    '#required' => TRUE,
+    '#default_value' => variable_get('smtp_port'),
+    '#attributes' => array('id' => 'smtp_port'),
+  );
+  $smtp_form['smtp_username'] = array(
+    '#type' => 'textfield',
+    '#title' => '邮箱用户',
+    '#required' => TRUE,
+    '#default_value' => variable_get('smtp_username'),
+    '#attributes' => array('id' => 'smtp_username'),
+  );
+  $smtp_form['smtp_password'] = array(
+    '#type' => 'textfield',
+    '#title' => '邮箱密码',
+    '#required' => TRUE,
+    '#default_value' => variable_get('smtp_password'),
+    '#attributes' => array('id' => 'smtp_password'),
+  );
+  $smtp_form['form_id'] = 'smtp_form';
+  $smtp_form['name'] = 'Smtp设置';
+
+  return $smtp_form;
+}
